@@ -1,6 +1,6 @@
 ---
-title: Applied diagnostic <br/> classification modeling
-subtitle: Using the R package measr
+title: Modeling attribute <br/> relationships in diagnostic <br/> models
+subtitle: With the R package measr
 author: W. Jake Thompson, Ph.D.
 format:
   measr-slides-revealjs:
@@ -18,137 +18,141 @@ filters:
   - lua/output-line-highlight.lua
 ---
 
-# Section title
-
 ```{r setup}
 library(tidyverse)
 library(countdown)
 library(ggmeasr)
 library(knitr)
 library(measr)
+library(dcmstan)
+library(dcmdata)
 library(here)
 
 set_theme(plot_margin = margin(5, 0, 0, 0))
 ```
 
-## Default Slide
+```{r estimate-models}
+lcdm_spec <- dcm_specify(dcmdata::ecpe_qmatrix, identifier = "item_id")
+hdcm_spec <- dcm_specify(dcmdata::ecpe_qmatrix, identifier = "item_id",
+                         structural_model = hdcm(
+                           "lexical -> cohesive -> morphosyntactic"
+                         ))
 
-Here is some **bold** and *italic* text.
+mod_lcdm <- dcm_estimate(lcdm_spec, dcmdata::ecpe_data, identifier = "resp_id",
+                         file = "fits/lcdm",
+                         iter = 1500, warmup = 1000, cores = 4)
+mod_hdcm <- dcm_estimate(hdcm_spec, dcmdata::ecpe_data, identifier = "resp_id",
+                         file = "fits/hdcm",
+                         iter = 1500, warmup = 1000, cores = 4)
+```
 
-* Bullets
-  * And sub-bullets
-* Another bullet
+```{r model-fit}
+#| eval: false
 
-## Columns
+mod_lcdm <- add_fit(mod_lcdm, method = "ppmc", model_fit = "raw_score")
+mod_hdcm <- add_fit(mod_hdcm, method = "ppmc", model_fit = "raw_score")
 
-:::columns
-:::{.column width="45%"}
-### Left column
+mod_lcdm <- add_criterion(mod_lcdm, criterion = "loo")
+mod_hdcm <- add_criterion(mod_hdcm, criterion = "loo")
+```
 
-- Point 1
-- Point 2
-- Point 3
-:::
+## Data: ECPE
 
-:::{.column width="45%"}
-### Right column
-
-- Point 4
-- Point 5
-- Point 6
-:::
-:::
-
-
-## Code
+* 28 items, measuring 3 attributes
+  * Lexical, cohesive, and morphosyntactic language skills
+* Used by [Templin & Hoffman (2013)](https://doi.org/10.1111/emip.12010) to demonstrate the LCDM
+  * [Templin & Bradshaw (2014)](https://doi.org/10.1007/s11336-013-9362-0) proposed a hierarchy among the attributes
+  * Lexical -> Cohesive -> Morphosyntactic
+* Available in the [dcmdata](https://dcmdata.r-dcm.org) package
 
 ```{r}
-#| echo: TRUE
-#| output-location: column
+#| eval: false
+#| echo: true
+
+# remotes::install_github("r-dcm/dcmdata")
+library(dcmdata)
+
+?ecpe
+```
+
+
+## Specify a DCM with measr
+
+* Unconstrained model with all possible profiles
+
+```{r}
+#| echo: true
+# remotes::install_github("wjakethompson/measr@refactor")
 library(measr)
-library(dcmstan)
 
-create_profiles(5)
-```
-
-## Code annotations
-
-```r
-starwars |>                            # <1>
-  mutate(                              # <2>
-    bmi = mass / ((height / 100) ^ 2), # <2>
-    age_new_hope = birth_year + 4      # <2>
-  )                                    # <2>
-```
-1. Take `starwars`, and then,
-2. add new columns for the BMI and age in "Return of the Jedi"
-
-## Output highlighting
-
-```{r}
-#| class-output: highlight
-#| output-line-numbers: "|3|5,6"
-
-starwars |> 
-  mutate(
-    bmi = mass / ((height / 100) ^ 2),
-    age_new_hope = birth_year + 4
-  )       
-```
-
-
-## Exercise 1 {.exercise}
-
-Here is an exercise.
-
-```{r countdown-1}
-countdown(
-  minutes = 3, 
-  seconds = 0,
-  right = "1%", bottom = "14%",
-  color_border              = "#023047",
-  color_background          = "#023047",
-  color_text                = "#8ECAE6",
-  color_running_background  = "#023047",
-  color_running_text        = "#8ECAE6",
-  color_finished_background = "#D7263D",
-  color_finished_text       = "#FFFFFF"
+lcdm_spec <- dcm_specify(
+  ecpe_qmatrix, identifier = "item_id", measurement_model = lcdm(),
+  structural_model = unconstrained()
 )
 ```
 
-# {.empty data-menu-title="measr" background-color="#023047" background-iframe="grid-worms/index.html"}
+* Constrained model that enforces the proposed hierarchy
 
 ```{r}
-#| label: big-image
-#| out-width: 100%
-#| fig-alt: "Hex logo for the measr R package."
+#| echo: true
 
-include_graphics("figure/measr-hex.png")
+hdcm_spec <- dcm_specify(
+  ecpe_qmatrix, identifier = "item_id", measurement_model = lcdm(),
+  structural_model = hdcm("lexical -> cohesive -> morphosyntactic")
+)
 ```
 
-## {.empty-white data-menu-title="Empty background"}
+## Estimate the competing models
+
+* The measr package wraps [*Stan*](https://mc-stan.org) for model estimation
 
 ```{r}
-#| label: big-image
-#| out-width: 100%
+#| echo: true
+#| eval: false
+
+mod_lcdm <- dcm_estimate(
+  lcdm_spec,                                 # <1>
+  data = ecpe_data, identifier = "resp_id",
+  iter = 1500, warmup = 1000, cores = 4
+)
+
+mod_hdcm <- dcm_estimate(
+  hdcm_spec,                                 # <2>
+  data = ecpe_data, identifier = "resp_id",
+  iter = 1500, warmup = 1000, cores = 4
+)
+```
+1. Supply your model specification to `dcm_estimate()`.
+2. Simply swap the model specifications to fit a competing model.
+
+## Compare profile base rates
+
+* Only profiles that conform to hierarchy are included in the HDCM
+
+```{r}
+#| echo: true
+#| code-fold: true
+
+full_join(
+  rename(measr_extract(mod_lcdm, "strc_param"), LCDM = estimate),
+  rename(measr_extract(mod_hdcm, "strc_param"), HDCM = estimate),
+  join_by(class)
+)
 ```
 
+## Relative fit comparisons
 
-# {.closing data-menu-title="Closing"}
+* Model comparisons with relative fit indices such as leave-one-out cross validation ([Vehtari et al., (2017)](https://doi.org/10.1007/s11222-016-9696-4))
 
-</br>
+```{r}
+#| echo: true
 
-:::{.end-title color="white" font-size="200%"}
-Presentation Title
-:::
+loo_compare(mod_lcdm, mod_hdcm, criterion = "loo",
+            model_names = c("LCDM", "HDCM"))
+```
 
-:::{.end-subtitle}
-Presentation Subtitle
-:::
-
-:::{.center}
-<https://measr.info>
-:::
+* Because the difference in the `elpd_diff` is small (i.e., < `se_diff`), we would prefer the HDCM
+  * Many fewer parameters, more parsimonious
 
 # <https://measr.info> {.thank-you data-menu-title="Get in touch" background-color="#023047"}
 
@@ -159,6 +163,9 @@ Presentation Subtitle
 ```{r}
 #| label: big-image
 #| out-width: 50%
+#| fig-alt: "Hex logo for the measr R package."
+
+include_graphics("figure/measr-hex.png")
 ```
 
 :::

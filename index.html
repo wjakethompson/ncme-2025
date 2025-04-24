@@ -7,17 +7,17 @@
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting-dark-fcf320763154d917f938583eb3977b81.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="index_files/libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
-<meta name="author" content="W. Jake Thompson, Ph.D.">
-<title>Applied diagnostic   classification modeling</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-<link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
-<link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
-<style>
+<script src="index_files/libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.27">
+
+  <meta name="author" content="W. Jake Thompson, Ph.D.">
+  <title>Modeling attribute   relationships in diagnostic   models</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -96,14 +96,14 @@
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
-<link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-47dd7b4ad126eccf2c02db1e4f12a133.css">
-<link rel="stylesheet" href="_extensions/r-dcm/measr-slides/backgrounds.css">
-<link rel="stylesheet" href="_extensions/r-dcm/measr-slides/lists.css">
-<link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-<link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-<link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-<link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-<style type="text/css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-2a950dff4af1678a6ecf708053bc6a65.css">
+  <link rel="stylesheet" href="_extensions/r-dcm/measr-slides/backgrounds.css">
+  <link rel="stylesheet" href="_extensions/r-dcm/measr-slides/lists.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -190,15 +190,14 @@
       margin-right: 0; 
     }
   </style>
-<link href="index_files/libs/countdown-0.4.0/countdown.css" rel="stylesheet">
-<script src="index_files/libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center"><h1 class="title">Applied diagnostic <br> classification modeling</h1>
-  <p class="subtitle">Using the R package measr</p>
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Modeling attribute <br> relationships in diagnostic <br> models</h1>
+  <p class="subtitle">With the R package measr</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -208,129 +207,142 @@ W. Jake Thompson, Ph.D.
 </div>
 </div>
 
-</section><section><section id="section-title" class="title-slide slide level1 center"><h1>Section title</h1>
-
-</section><section id="default-slide" class="slide level2"><h2>Default Slide</h2>
-<p>Here is some <strong>bold</strong> and <em>italic</em> text.</p>
+</section>
+<section id="data-ecpe" class="slide level2">
+<h2>Data: ECPE</h2>
 <ul>
-<li>Bullets
+<li>28 items, measuring 3 attributes
 <ul>
-<li>And sub-bullets</li>
+<li>Lexical, cohesive, and morphosyntactic language skills</li>
+</ul></li>
+<li>Used by <a href="https://doi.org/10.1111/emip.12010">Templin &amp; Hoffman (2013)</a> to demonstrate the LCDM
+<ul>
+<li><a href="https://doi.org/10.1007/s11336-013-9362-0">Templin &amp; Bradshaw (2014)</a> proposed a hierarchy among the attributes</li>
+<li>Lexical -&gt; Cohesive -&gt; Morphosyntactic</li>
+</ul></li>
+<li>Available in the <a href="https://dcmdata.r-dcm.org">dcmdata</a> package</li>
 </ul>
-</li>
-<li>Another bullet</li>
-</ul></section><section id="columns" class="slide level2"><h2>Columns</h2>
-<div class="columns">
-<div class="column" style="width:45%;">
-<h3 id="left-column">Left column</h3>
-<ul>
-<li>Point 1</li>
-<li>Point 2</li>
-<li>Point 3</li>
-</ul>
-</div><div class="column" style="width:45%;">
-<h3 id="right-column">Right column</h3>
-<ul>
-<li>Point 4</li>
-<li>Point 5</li>
-<li>Point 6</li>
-</ul>
-</div></div>
-</section><section id="code" class="slide level2"><h2>Code</h2>
-<div class="cell columns column-output-location" data-layout-align="center">
-<div class="column">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(measr)</span>
-<span id="cb1-2"><a href=""></a><span class="fu">library</span>(dcmstan)</span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a><span class="fu">create_profiles</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; # A tibble: 32 × 5
-#&gt;     att1  att2  att3  att4  att5
-#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-#&gt;  1     0     0     0     0     0
-#&gt;  2     1     0     0     0     0
-#&gt;  3     0     1     0     0     0
-#&gt;  4     0     0     1     0     0
-#&gt;  5     0     0     0     1     0
-#&gt;  6     0     0     0     0     1
-#&gt;  7     1     1     0     0     0
-#&gt;  8     1     0     1     0     0
-#&gt;  9     1     0     0     1     0
-#&gt; 10     1     0     0     0     1
-#&gt; # ℹ 22 more rows</code></pre>
-</div>
-</div></div>
-</section><section id="code-annotations" class="slide level2"><h2>Code annotations</h2>
-<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a>starwars <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3"></a>    <span class="at">bmi =</span> mass <span class="sc">/</span> ((height <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">^</span> <span class="dv">2</span>),</span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a>    <span class="at">age_new_hope =</span> birth_year <span class="sc">+</span> <span class="dv">4</span></span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Take <code>starwars</code>, and then,</span>
-</dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2,3,4,5" data-code-annotation="2">add new columns for the BMI and age in “Return of the Jedi”</span>
-</dd>
-</dl></section><section id="output-highlighting" class="slide level2"><h2>Output highlighting</h2>
-<div class="cell" data-layout-align="center" data-output-line-numbers="|3|5,6">
-<div class="cell-output cell-output-stdout">
-<div class="sourceCode" id="cb3" data-code-line-numbers="|3|5,6"><pre class="sourceCode numberSource highlight has-line-highlights number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href=""></a>#&gt; # A tibble: 87 × 16</span>
-<span id="cb3-2"><a href=""></a>#&gt;    name     height  mass hair_color skin_color eye_color birth_year sex   gender</span>
-<span id="cb3-3"><a href=""></a>#&gt;    &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; </span>
-<span id="cb3-4"><a href=""></a>#&gt;  1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…</span>
-<span id="cb3-5"><a href=""></a>#&gt;  2 C-3PO       167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…</span>
-<span id="cb3-6"><a href=""></a>#&gt;  3 R2-D2        96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…</span>
-<span id="cb3-7"><a href=""></a>#&gt;  4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…</span>
-<span id="cb3-8"><a href=""></a>#&gt;  5 Leia Or…    150    49 brown      light      brown           19   fema… femin…</span>
-<span id="cb3-9"><a href=""></a>#&gt;  6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…</span>
-<span id="cb3-10"><a href=""></a>#&gt;  7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…</span>
-<span id="cb3-11"><a href=""></a>#&gt;  8 R5-D4        97    32 &lt;NA&gt;       white, red red             NA   none  mascu…</span>
-<span id="cb3-12"><a href=""></a>#&gt;  9 Biggs D…    183    84 black      light      brown           24   male  mascu…</span>
-<span id="cb3-13"><a href=""></a>#&gt; 10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…</span>
-<span id="cb3-14"><a href=""></a>#&gt; # ℹ 77 more rows</span>
-<span id="cb3-15"><a href=""></a>#&gt; # ℹ 7 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span>
-<span id="cb3-16"><a href=""></a>#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;, bmi &lt;dbl&gt;, age_new_hope &lt;dbl&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section><section id="exercise-1" class="slide level2 exercise"><h2>Exercise 1</h2>
-<p>Here is an exercise.</p>
 <div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="countdown" id="timer_ae128d24" data-update-every="1" tabindex="0" style="right:1%;bottom:14%;">
-<div class="countdown-controls">
-<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># remotes::install_github("r-dcm/dcmdata")</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(dcmdata)</span>
+<span id="cb1-3"><a href=""></a></span>
+<span id="cb1-4"><a href=""></a>?ecpe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</section>
+<section id="specify-a-dcm-with-measr" class="slide level2">
+<h2>Specify a DCM with measr</h2>
+<ul>
+<li>Unconstrained model with all possible profiles</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># remotes::install_github("wjakethompson/measr@refactor")</span></span>
+<span id="cb2-2"><a href=""></a><span class="fu">library</span>(measr)</span>
+<span id="cb2-3"><a href=""></a></span>
+<span id="cb2-4"><a href=""></a>lcdm_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
+<span id="cb2-5"><a href=""></a>  ecpe_qmatrix, <span class="at">identifier =</span> <span class="st">"item_id"</span>, <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
+<span id="cb2-6"><a href=""></a>  <span class="at">structural_model =</span> <span class="fu">unconstrained</span>()</span>
+<span id="cb2-7"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Constrained model that enforces the proposed hierarchy</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>hdcm_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
+<span id="cb3-2"><a href=""></a>  ecpe_qmatrix, <span class="at">identifier =</span> <span class="st">"item_id"</span>, <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
+<span id="cb3-3"><a href=""></a>  <span class="at">structural_model =</span> <span class="fu">hdcm</span>(<span class="st">"lexical -&gt; cohesive -&gt; morphosyntactic"</span>)</span>
+<span id="cb3-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="estimate-the-competing-models" class="slide level2">
+<h2>Estimate the competing models</h2>
+<ul>
+<li>The measr package wraps <a href="https://mc-stan.org"><em>Stan</em></a> for model estimation</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1"></a>mod_lcdm <span class="ot">&lt;-</span> <span class="fu">dcm_estimate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2"></a>  lcdm_spec,</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3"></a>  <span class="at">data =</span> ecpe_data, <span class="at">identifier =</span> <span class="st">"resp_id"</span>,</span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4"></a>  <span class="at">iter =</span> <span class="dv">1500</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span></span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5"></a>)</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6"></a></span>
+<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7"></a>mod_hdcm <span class="ot">&lt;-</span> <span class="fu">dcm_estimate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-8" class="code-annotation-target"><a href="#annotated-cell-4-8"></a>  hdcm_spec,</span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9"></a>  <span class="at">data =</span> ecpe_data, <span class="at">identifier =</span> <span class="st">"resp_id"</span>,</span>
+<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10"></a>  <span class="at">iter =</span> <span class="dv">1500</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">cores =</span> <span class="dv">4</span></span>
+<span id="annotated-cell-4-11"><a href="#annotated-cell-4-11"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="1">Supply your model specification to <code>dcm_estimate()</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="8" data-code-annotation="2">Simply swap the model specifications to fit a competing model.</span>
+</dd>
+</dl>
 </div>
 </div>
+</section>
+<section id="compare-profile-base-rates" class="slide level2">
+<h2>Compare profile base rates</h2>
+<ul>
+<li>Only profiles that conform to hierarchy are included in the HDCM</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">full_join</span>(</span>
+<span id="cb4-2"><a href=""></a>  <span class="fu">rename</span>(<span class="fu">measr_extract</span>(mod_lcdm, <span class="st">"strc_param"</span>), <span class="at">LCDM =</span> estimate),</span>
+<span id="cb4-3"><a href=""></a>  <span class="fu">rename</span>(<span class="fu">measr_extract</span>(mod_hdcm, <span class="st">"strc_param"</span>), <span class="at">HDCM =</span> estimate),</span>
+<span id="cb4-4"><a href=""></a>  <span class="fu">join_by</span>(class)</span>
+<span id="cb4-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 8 × 3
+#&gt;   class               LCDM          HDCM
+#&gt;   &lt;chr&gt;         &lt;rvar[1d]&gt;    &lt;rvar[1d]&gt;
+#&gt; 1 [0,0,0]  0.2976 ± 0.0165  0.32 ± 0.014
+#&gt; 2 [1,0,0]  0.0119 ± 0.0062    NA ± NA   
+#&gt; 3 [0,1,0]  0.0166 ± 0.0109    NA ± NA   
+#&gt; 4 [0,0,1]  0.1281 ± 0.0199  0.14 ± 0.019
+#&gt; 5 [1,1,0]  0.0093 ± 0.0057    NA ± NA   
+#&gt; 6 [1,0,1]  0.0184 ± 0.0099    NA ± NA   
+#&gt; 7 [0,1,1]  0.1731 ± 0.0198  0.18 ± 0.019
+#&gt; 8 [1,1,1]  0.3451 ± 0.0169  0.35 ± 0.016</code></pre>
 </div>
-</section></section><section><section id="section" class="title-slide slide level1 empty center" data-menu-title="measr" data-background-color="#023047" data-background-iframe="grid-worms/index.html"><h1></h1>
-
-<img data-src="figure/measr-hex.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%" alt="Hex logo for the measr R package."></section><section id="section-1" class="slide level2 empty-white" data-menu-title="Empty background"><h2></h2>
-
-<img data-src="figure/measr-hex.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section></section><section id="section-2" class="title-slide slide level1 closing center" data-menu-title="Closing"><h1></h1>
-<p></p>
-<div class="end-title" color="white" data-font-size="200%">
-<p>Presentation Title</p>
 </div>
-<div class="end-subtitle">
-<p>Presentation Subtitle</p>
+</section>
+<section id="relative-fit-comparisons" class="slide level2">
+<h2>Relative fit comparisons</h2>
+<ul>
+<li>Model comparisons with relative fit indices such as leave-one-out cross validation (<a href="https://doi.org/10.1007/s11222-016-9696-4">Vehtari et al., (2017)</a>)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">loo_compare</span>(mod_lcdm, mod_hdcm, <span class="at">criterion =</span> <span class="st">"loo"</span>,</span>
+<span id="cb6-2"><a href=""></a>            <span class="at">model_names =</span> <span class="fu">c</span>(<span class="st">"LCDM"</span>, <span class="st">"HDCM"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;      elpd_diff se_diff
+#&gt; LCDM  0.0       0.0   
+#&gt; HDCM -3.7       4.7</code></pre>
 </div>
-<div class="center">
-<p><a href="https://measr.info" class="uri">https://measr.info</a></p>
 </div>
-</section><section id="httpsmeasr.info" class="title-slide slide level1 thank-you center" data-menu-title="Get in touch" data-background-color="#023047"><h1><a href="https://measr.info" class="uri">https://measr.info</a></h1>
+<ul>
+<li>Because the difference in the <code>elpd_diff</code> is small (i.e., &lt; <code>se_diff</code>), we would prefer the HDCM
+<ul>
+<li>Many fewer parameters, more parsimonious</li>
+</ul></li>
+</ul>
+</section>
+<section id="httpsmeasr.info" class="title-slide slide level1 thank-you center" data-menu-title="Get in touch" data-background-color="#023047">
+<h1><a href="https://measr.info" class="uri">https://measr.info</a></h1>
 <div class="columns v-center-container">
 <div class="column image" style="width:65%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="figure/measr-hex.png" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+<figure>
+<p><img data-src="figure/measr-hex.png" class="quarto-figure quarto-figure-center" style="width:50.0%" alt="Hex logo for the measr R package."></p>
 </figure>
 </div>
 </div>
@@ -338,20 +350,43 @@ W. Jake Thompson, Ph.D.
 </div><div class="column" style="width:35%;">
 <div class="thank-you-subtitle">
 <div class="small">
-<p><iconify-icon inline="" icon="fa6-solid:globe" aria-label="Icon globe from fa6-solid Iconify.design set." title="Icon globe from fa6-solid Iconify.design set."></iconify-icon> &nbsp;<a href="https://wjakethompson.com">wjakethompson.com</a><br><iconify-icon inline="" icon="fa6-solid:envelope" aria-label="Icon envelope from fa6-solid Iconify.design set." title="Icon envelope from fa6-solid Iconify.design set."></iconify-icon> &nbsp;<a href="mailto:wjakethompson@ku.edu">wjakethompson@ku.edu</a><br><iconify-icon inline="" icon="fa6-brands:linkedin" aria-label="Icon linkedin from fa6-brands Iconify.design set." title="Icon linkedin from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://linkedin.com/in/wjakethompson">in/wjakethompson</a><br><iconify-icon inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://github.com/wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span></a><br><iconify-icon inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://bsky.app/profile/wjakethompson.com"><span class="citation" data-cites="wjakethompson.com">@wjakethompson.com</span></a><br><iconify-icon inline="" icon="fa6-brands:mastodon" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="Icon mastodon from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://fosstodon.org/@wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span><span class="citation" data-cites="fosstodon.org">@fosstodon.org</span></a><br><iconify-icon inline="" icon="fa6-brands:threads" aria-label="Icon threads from fa6-brands Iconify.design set." title="Icon threads from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://www.threads.net/@wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span></a><br><iconify-icon inline="" icon="fa6-brands:x-twitter" aria-label="Icon x-twitter from fa6-brands Iconify.design set." title="Icon x-twitter from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://twitter.com/wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span></a></p>
+<p><iconify-icon inline="" icon="fa6-solid:globe" aria-label="Icon globe from fa6-solid Iconify.design set." title="Icon globe from fa6-solid Iconify.design set."></iconify-icon> &nbsp;<a href="https://wjakethompson.com">wjakethompson.com</a><br>
+<iconify-icon inline="" icon="fa6-solid:envelope" aria-label="Icon envelope from fa6-solid Iconify.design set." title="Icon envelope from fa6-solid Iconify.design set."></iconify-icon> &nbsp;<a href="mailto:wjakethompson@ku.edu">wjakethompson@ku.edu</a><br>
+<iconify-icon inline="" icon="fa6-brands:linkedin" aria-label="Icon linkedin from fa6-brands Iconify.design set." title="Icon linkedin from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://linkedin.com/in/wjakethompson">in/wjakethompson</a><br>
+<iconify-icon inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://github.com/wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span></a><br>
+<iconify-icon inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://bsky.app/profile/wjakethompson.com"><span class="citation" data-cites="wjakethompson.com">@wjakethompson.com</span></a><br>
+<iconify-icon inline="" icon="fa6-brands:mastodon" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="Icon mastodon from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://fosstodon.org/@wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span><span class="citation" data-cites="fosstodon.org">@fosstodon.org</span></a><br>
+<iconify-icon inline="" icon="fa6-brands:threads" aria-label="Icon threads from fa6-brands Iconify.design set." title="Icon threads from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://www.threads.net/@wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span></a><br>
+<iconify-icon inline="" icon="fa6-brands:x-twitter" aria-label="Icon x-twitter from fa6-brands Iconify.design set." title="Icon x-twitter from fa6-brands Iconify.design set."></iconify-icon> &nbsp;<a href="https://twitter.com/wjakethompson"><span class="citation" data-cites="wjakethompson">@wjakethompson</span></a></p>
 </div>
 </div>
 </div></div>
 
 </section>
-</div>
+    </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="index_files/libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script><script src="index_files/libs/revealjs/plugin/notes/notes.js"></script><script src="index_files/libs/revealjs/plugin/search/search.js"></script><script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script><script src="index_files/libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -542,7 +577,9 @@ W. Jake Thompson, Ph.D.
           RevealZoom
         ]
       });
-    </script><script>
+    </script>
+    
+    <script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -577,7 +614,9 @@ W. Jake Thompson, Ph.D.
         }
 
       })();
-    </script><script id="quarto-html-after-body" type="application/javascript">
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -898,6 +937,6 @@ W. Jake Thompson, Ph.D.
         }
       });
       </script>
-
+    
 
 </body></html>

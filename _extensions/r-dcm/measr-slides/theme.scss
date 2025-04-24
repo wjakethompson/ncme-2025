@@ -288,3 +288,13 @@ code a:any-link {
 .reveal .slides .quarto-figure-center {
   margin-bottom: 0;
 }
+
+/* code folding */
+details>summary {
+  color: var(--r-link-color);
+  font-size: 2rem;
+}
+
+details.code-fold {
+  margin-bottom: .2rem;
+}
