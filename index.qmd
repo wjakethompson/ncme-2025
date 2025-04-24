@@ -5,6 +5,8 @@ author: W. Jake Thompson, Ph.D.
 format:
   measr-slides-revealjs:
     progress: false
+    auto-slide: 60000
+    loop: true
 knitr:
   opts_chunk: 
     comment: "#>"
